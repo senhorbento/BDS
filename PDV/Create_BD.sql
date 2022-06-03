@@ -1,7 +1,8 @@
 CREATE DATABASE pdv;
+USE pdv;
 
 CREATE TABLE Cliente (
-    id              INT PRIMARY KEY, 
+    id              INT PRIMARY KEY AUTO_INCREMENT, 
     nome            VARCHAR(100), 
     cpf_cnpj        VARCHAR(14),
     logradouro      VARCHAR(100), 
@@ -16,7 +17,7 @@ CREATE TABLE Cliente (
 );
 
 CREATE TABLE Venda (
-    id                  INT PRIMARY KEY, 
+    id                  INT PRIMARY KEY AUTO_INCREMENT, 
     data_venda          VARCHAR(15), 
     total_venda         INT, 
     estado_venda        VARCHAR(10),
@@ -25,15 +26,15 @@ CREATE TABLE Venda (
 );
 
 CREATE TABLE ContaReceber (
-    id                      INT PRIMARY KEY, 
-    id_cliente              INT, 
-    total_conta             INT, 
+    id                      INT PRIMARY KEY AUTO_INCREMENT, 
+    id_cliente              INT NOT NULL, 
+    total_conta             INT NOT NULL, 
     recebido                INT, 
-    data_lancamento         VARCHAR(15), 
-    data_vencimento         VARCHAR(15),
+    data_lancamento         VARCHAR(15) NOT NULL, 
+    data_vencimento         VARCHAR(15) NOT NULL,
     data_recebimento        VARCHAR(15), 
     valor_recebimento       VARCHAR(15),
-    estado_conta            VARCHAR(10),
+    estado_conta            VARCHAR(10) NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES Cliente(id)
 );
 
@@ -52,7 +53,7 @@ CREATE TABLE FormaPagamentoVenda (
 );
 
 CREATE TABLE Fornecedor (
-    id              INT PRIMARY KEY, 
+    id              INT PRIMARY KEY AUTO_INCREMENT, 
     nome            VARCHAR(100), 
     cpf_cnpj        VARCHAR(14),
     logradouro      VARCHAR(100), 
@@ -67,7 +68,7 @@ CREATE TABLE Fornecedor (
 );
 
 CREATE TABLE Produto (
-    id                      INT PRIMARY KEY, 
+    id                      INT PRIMARY KEY AUTO_INCREMENT, 
     nome                    VARCHAR(100), 
     quantidade_estoque      INT NOT NULL, 
     preco                   INT NOT NULL,  
@@ -89,7 +90,7 @@ CREATE TABLE ItemVenda (
 );
 
 CREATE TABLE Compra (
-    id                  INT PRIMARY KEY, 
+    id                  INT PRIMARY KEY AUTO_INCREMENT, 
     data_compra         VARCHAR(15), 
     total_compra        INT, 
     estado_compra       VARCHAR(10),
@@ -111,7 +112,7 @@ CREATE TABLE ItemCompra (
 );
 
 CREATE TABLE ContaPagar (
-    id                      INT PRIMARY KEY, 
+    id                      INT PRIMARY KEY AUTO_INCREMENT, 
     id_fornecedor           INT, 
     total_conta             INT, 
     pago                    INT, 
@@ -124,10 +125,20 @@ CREATE TABLE ContaPagar (
 );
 
 CREATE TABLE FormaPagamentoCompra (
-    id_forma_pagamento      INT,
+    id_forma_pagamento      INT AUTO_INCREMENT,
     id_compra               INT,
     valor                   INT,
     PRIMARY KEY (id_forma_pagamento, id_compra),
     FOREIGN KEY (id_forma_pagamento) REFERENCES FormaPagamento(id),
     FOREIGN KEY (id_compra) REFERENCES Compra(id)
 );
+
+DELIMITER /
+CREATE TRIGGER InserirContaReceber 
+AFTER INSERT ON Venda
+FOR EACH ROW
+BEGIN
+    INSERT INTO ContaReceber (id_cliente, total_conta, data_lancamento, data_vencimento, estado_conta)
+    VALUES (New.id_cliente, New.total_venda,current_date(), DATE_ADD(current_date(), INTERVAL 30 DAY), "ABERTA");
+END /
+DELIMITER ;
