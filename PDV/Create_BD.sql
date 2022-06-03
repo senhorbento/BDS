@@ -34,7 +34,7 @@ CREATE TABLE ContaReceber (
     data_vencimento         VARCHAR(15) NOT NULL,
     data_recebimento        VARCHAR(15), 
     valor_recebimento       VARCHAR(15),
-    estado_conta            VARCHAR(10) NOT NULL,
+    estado_conta            VARCHAR(20) NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES Cliente(id)
 );
 
@@ -115,12 +115,10 @@ CREATE TABLE ContaPagar (
     id                      INT PRIMARY KEY AUTO_INCREMENT, 
     id_fornecedor           INT, 
     total_conta             INT, 
-    pago                    INT, 
     data_lancamento         VARCHAR(15), 
     data_vencimento         VARCHAR(15),
     data_pagamento          VARCHAR(15), 
-    valor_pagamento         VARCHAR(15),
-    estado_conta            VARCHAR(10),
+    estado_conta            VARCHAR(20),
     FOREIGN KEY (id_fornecedor) REFERENCES Fornecedor(id)
 );
 
@@ -134,21 +132,69 @@ CREATE TABLE FormaPagamentoCompra (
 );
 
 DELIMITER /
-CREATE TRIGGER InserirContaReceber 
-AFTER INSERT ON Venda
-FOR EACH ROW
-BEGIN
-    INSERT INTO ContaReceber (id_cliente, total_conta, data_lancamento, data_vencimento, estado_conta)
-    VALUES (New.id_cliente, New.total_venda,current_date(), DATE_ADD(current_date(), INTERVAL 30 DAY), "ABERTA");
-END /
+    CREATE TRIGGER InserirContaReceber 
+    AFTER INSERT ON Venda
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO ContaReceber (id_cliente, total_conta, data_lancamento, data_vencimento, estado_conta)
+        VALUES (New.id_cliente, New.total_venda,current_date(), DATE_ADD(current_date(), INTERVAL 30 DAY), "ABERTA");
+    END /
 DELIMITER ;
 
 DELIMITER /
-CREATE TRIGGER InserirContaPagar 
-AFTER INSERT ON Compra
-FOR EACH ROW
-BEGIN
-    INSERT INTO ContaPagar (id_fornecedor, total_conta, data_lancamento, data_vencimento, estado_conta)
-    VALUES (New.id_fornecedor, New.total_compra,current_date(), DATE_ADD(current_date(), INTERVAL 30 DAY), "ABERTA");
-END /
+    CREATE TRIGGER InserirContaPagar 
+    AFTER INSERT ON Compra
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO ContaPagar (id_fornecedor, total_conta, data_lancamento, data_vencimento, estado_conta)
+        VALUES (New.id_fornecedor, New.total_compra,current_date(), DATE_ADD(current_date(), INTERVAL 30 DAY), "ABERTA");
+    END /
+DELIMITER ;
+
+DELIMITER /
+    CREATE PROCEDURE BaixarContaReceber(IN remover INT)
+    BEGIN
+		DECLARE vencimento VARCHAR(15) DEFAULT 0;
+    
+		SELECT data_vencimento
+        INTO vencimento
+        FROM ContaReceber
+        WHERE id = remover;
+        
+        IF (current_date() > vencimento) THEN
+            UPDATE ContaReceber 
+            SET estado_conta = "PAGA-ATRASADO",
+            data_recebimento = current_date()
+            WHERE id = remover;
+        ELSE
+            UPDATE ContaReceber  
+            SET estado_conta = "PAGA",
+            data_recebimento = current_date()
+            WHERE id = remover;
+        END IF;
+    END /
+DELIMITER ;
+
+DELIMITER /
+    CREATE PROCEDURE BaixarContaPagar(IN remover INT)
+    BEGIN
+        DECLARE vencimento VARCHAR(15) DEFAULT 0;
+    
+		SELECT data_vencimento
+        INTO vencimento
+        FROM ContaReceber
+        WHERE id = remover;
+
+        IF(current_date() > data_vencimento) THEN
+            UPDATE ContaPagar 
+            SET estado_conta = "PAGA-ATRASADO",
+            data_pagamento = current_date()
+            WHERE id = remover;
+        ELSE
+            UPDATE ContaPagar 
+            SET estado_conta = "PAGA",
+            data_pagamento = current_date()
+            WHERE id = remover;
+        END IF;
+    END /
 DELIMITER ;
