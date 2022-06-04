@@ -13,7 +13,8 @@ CREATE TABLE Cliente (
     estado          VARCHAR(100), 
     cep             VARCHAR(8), 
     telefone        VARCHAR(20), 
-    email           VARCHAR(100)
+    email           VARCHAR(100),
+    estado_cliente  VARCHAR(10)
 );
 
 CREATE TABLE Venda (
@@ -29,7 +30,6 @@ CREATE TABLE ContaReceber (
     id                      INT PRIMARY KEY AUTO_INCREMENT, 
     id_cliente              INT NOT NULL, 
     total_conta             INT NOT NULL, 
-    recebido                INT, 
     data_lancamento         VARCHAR(15) NOT NULL, 
     data_vencimento         VARCHAR(15) NOT NULL,
     data_recebimento        VARCHAR(15), 
@@ -53,18 +53,19 @@ CREATE TABLE FormaPagamentoVenda (
 );
 
 CREATE TABLE Fornecedor (
-    id              INT PRIMARY KEY AUTO_INCREMENT, 
-    nome            VARCHAR(100), 
-    cpf_cnpj        VARCHAR(14),
-    logradouro      VARCHAR(100), 
-    numero          VARCHAR(100), 
-    complemento     VARCHAR(100), 
-    bairro          VARCHAR(100),
-    cidade          VARCHAR(100), 
-    estado          VARCHAR(100), 
-    cep             VARCHAR(8), 
-    telefone        VARCHAR(20), 
-    email           VARCHAR(100)
+    id                      INT PRIMARY KEY AUTO_INCREMENT, 
+    nome                    VARCHAR(100), 
+    cpf_cnpj                VARCHAR(14),
+    logradouro              VARCHAR(100), 
+    numero                  VARCHAR(100), 
+    complemento             VARCHAR(100), 
+    bairro                  VARCHAR(100),
+    cidade                  VARCHAR(100), 
+    estado                  VARCHAR(100), 
+    cep                     VARCHAR(8), 
+    telefone                VARCHAR(20), 
+    email                   VARCHAR(100),
+    estado_fornecedor       VARCHAR(10)
 );
 
 CREATE TABLE Produto (
@@ -154,9 +155,9 @@ DELIMITER ;
 DELIMITER /
     CREATE PROCEDURE BaixarContaReceber(IN remover INT)
     BEGIN
-		DECLARE vencimento VARCHAR(15) DEFAULT 0;
-    
-		SELECT data_vencimento
+        DECLARE vencimento VARCHAR(15) DEFAULT 0;
+
+        SELECT data_vencimento
         INTO vencimento
         FROM ContaReceber
         WHERE id = remover;
@@ -179,8 +180,8 @@ DELIMITER /
     CREATE PROCEDURE BaixarContaPagar(IN remover INT)
     BEGIN
         DECLARE vencimento VARCHAR(15) DEFAULT 0;
-    
-		SELECT data_vencimento
+
+        SELECT data_vencimento
         INTO vencimento
         FROM ContaReceber
         WHERE id = remover;
@@ -196,5 +197,32 @@ DELIMITER /
             data_pagamento = current_date()
             WHERE id = remover;
         END IF;
+    END /
+DELIMITER ;
+
+DELIMITER /
+    CREATE PROCEDURE ExcluirCliente(IN remover INT)
+    BEGIN
+        UPDATE Cliente 
+        SET estado_cliente = "EXCLUIDO"
+        WHERE id = remover;
+    END /
+DELIMITER ;
+
+DELIMITER /
+    CREATE PROCEDURE ExcluirFornecedor(IN remover INT)
+    BEGIN
+        UPDATE Fornecedor 
+        SET estado_fornecedor = "EXCLUIDO"
+        WHERE id = remover;
+    END /
+DELIMITER ;
+
+DELIMITER /
+    CREATE PROCEDURE ExcluirVenda(IN remover INT)
+    BEGIN
+        UPDATE Venda 
+        SET estado_venda = "EXCLUIDO"
+        WHERE id = remover;
     END /
 DELIMITER ;
