@@ -31,7 +31,7 @@ DELIMITER /
 
         SELECT data_vencimento
         INTO vencimento
-        FROM ContaReceber
+        FROM ContaPagar
         WHERE id = baixar;
 
         IF(current_date() > data_vencimento) THEN
@@ -71,6 +71,15 @@ DELIMITER /
     BEGIN
         UPDATE Venda 
         SET estado_venda = "EXCLUIDO"
+        WHERE id = remover;
+    END /
+DELIMITER ;
+
+DELIMITER /
+    CREATE PROCEDURE ExcluirCompra(IN remover INT)
+    BEGIN
+        UPDATE Compra 
+        SET estado_compra = "EXCLUIDO"
         WHERE id = remover;
     END /
 DELIMITER ;
