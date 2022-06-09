@@ -51,22 +51,26 @@ CREATE TABLE ContaReceber (
     id                      INT PRIMARY KEY AUTO_INCREMENT, 
     id_cliente              INT NOT NULL, 
     total_conta             INT NOT NULL, 
+    id_forma_pagamento      INT NOT NULL,
     data_lancamento         VARCHAR(15) NOT NULL, 
     data_vencimento         VARCHAR(15) NOT NULL,
     estado_conta            VARCHAR(20) NOT NULL,
     data_recebimento        VARCHAR(15), 
-    FOREIGN KEY (id_cliente) REFERENCES Cliente(id)
+    FOREIGN KEY (id_cliente) REFERENCES Cliente(id),
+    FOREIGN KEY (id_forma_pagamento) REFERENCES FormaPagamento(id)
 );
 
 CREATE TABLE ContaPagar (
     id                      INT PRIMARY KEY AUTO_INCREMENT, 
     id_fornecedor           INT NOT NULL, 
     total_conta             INT NOT NULL, 
+    id_forma_pagamento      INT NOT NULL,
     data_lancamento         VARCHAR(15) NOT NULL, 
     data_vencimento         VARCHAR(15) NOT NULL,
     estado_conta            VARCHAR(20) NOT NULL,
     data_pagamento          VARCHAR(15), 
-    FOREIGN KEY (id_fornecedor) REFERENCES Fornecedor(id)
+    FOREIGN KEY (id_fornecedor) REFERENCES Fornecedor(id),
+    FOREIGN KEY (id_forma_pagamento) REFERENCES FormaPagamento(id)
 );
 
 CREATE TABLE Produto (

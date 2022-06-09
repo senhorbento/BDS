@@ -4,9 +4,15 @@ DELIMITER /
     CREATE PROCEDURE BaixarContaReceber(IN baixar INT)
     BEGIN
         DECLARE vencimento VARCHAR(15) DEFAULT 0;
+        DECLARE valor INT DEFAULT 0;
 
         SELECT data_vencimento
         INTO vencimento
+        FROM ContaReceber
+        WHERE id = baixar;
+
+        SELECT total_conta
+        INTO valor
         FROM ContaReceber
         WHERE id = baixar;
         
@@ -21,6 +27,11 @@ DELIMITER /
             data_recebimento = current_date()
             WHERE id = baixar;
         END IF;
+
+        UPDATE Caixa
+        SET saldo = saldo + valor 
+        WHERE id = id_forma_pagamento; 
+
     END /
 DELIMITER ;
 
@@ -28,9 +39,15 @@ DELIMITER /
     CREATE PROCEDURE BaixarContaPagar(IN baixar INT)
     BEGIN
         DECLARE vencimento VARCHAR(15) DEFAULT 0;
+        DECLARE valor INT DEFAULT 0;
 
         SELECT data_vencimento
         INTO vencimento
+        FROM ContaPagar
+        WHERE id = baixar;
+
+        SELECT total_conta
+        INTO valor
         FROM ContaPagar
         WHERE id = baixar;
 
@@ -45,5 +62,10 @@ DELIMITER /
             data_pagamento = current_date()
             WHERE id = baixar;
         END IF;
+
+        UPDATE Caixa
+        SET saldo = saldo - valor 
+        WHERE id = id_forma_pagamento;
+
     END /
 DELIMITER ;
