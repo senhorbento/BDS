@@ -41,3 +41,13 @@ DELIMITER /
         WHERE id = New.id_produto;
     END /
 DELIMITER ;
+
+DELIMITER /
+    CREATE TRIGGER AddFormaPagamentoCompraNoCaixa
+    AFTER INSERT ON FormaPagamentoCompra
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO FormaPagamentoCompra (saldo, id_forma_pagamento)
+        VALUES (0, New.id);
+    END /
+DELIMITER ;

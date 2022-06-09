@@ -88,7 +88,7 @@ CREATE TABLE Compra (
 );
 
 CREATE TABLE FormaPagamentoVenda (
-    id_forma_pagamento      INT NOT NULL,
+    id                      INT NOT NULL,
     id_venda                INT NOT NULL,
     valor                   INT NOT NULL,
     PRIMARY KEY (id_forma_pagamento, id_venda),
@@ -97,7 +97,7 @@ CREATE TABLE FormaPagamentoVenda (
 );
 
 CREATE TABLE FormaPagamentoCompra (
-    id_forma_pagamento      INT NOT NULL,
+    id                      INT NOT NULL,
     id_compra               INT NOT NULL,
     valor                   INT NOT NULL,
     PRIMARY KEY (id_forma_pagamento, id_compra),
@@ -129,4 +129,12 @@ CREATE TABLE ItemCompra (
     PRIMARY KEY (id_compra, numero_item_compra),
     FOREIGN KEY (id_compra) REFERENCES Compra(id),
     FOREIGN KEY (id_produto) REFERENCES Produto(id)
+);
+
+
+CREATE TABLE Caixa (
+    id                      INT PRIMARY KEY AUTO_INCREMENT,
+    saldo                   INT NOT NULL,
+    id_forma_pagamento      INT NOT NULL,
+    FOREIGN KEY (id_forma_pagamento) REFERENCES FormaPagamentoCompra(id)
 );
