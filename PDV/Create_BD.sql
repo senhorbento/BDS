@@ -136,5 +136,5 @@ CREATE TABLE Caixa (
     id                      INT PRIMARY KEY AUTO_INCREMENT,
     saldo                   INT NOT NULL,
     id_forma_pagamento      INT NOT NULL,
-    FOREIGN KEY (id_forma_pagamento) REFERENCES FormaPagamentoCompra(id)
+    FOREIGN KEY (id_forma_pagamento) REFERENCES FormaPagamento(id)
 );

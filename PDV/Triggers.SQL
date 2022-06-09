@@ -43,11 +43,11 @@ DELIMITER /
 DELIMITER ;
 
 DELIMITER /
-    CREATE TRIGGER AddFormaPagamentoCompraNoCaixa
-    AFTER INSERT ON FormaPagamentoCompra
+    CREATE TRIGGER AddFormaPagamentoNoCaixa
+    AFTER INSERT ON FormaPagamento
     FOR EACH ROW
     BEGIN
-        INSERT INTO FormaPagamentoCompra (saldo, id_forma_pagamento)
+        INSERT INTO Caixa (saldo, id_forma_pagamento)
         VALUES (0, New.id);
     END /
 DELIMITER ;
