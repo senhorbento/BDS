@@ -1,3 +1,5 @@
+USE pdv;
+
 DELIMITER /
     CREATE PROCEDURE ExcluirCliente(IN cancelar INT)
     BEGIN
