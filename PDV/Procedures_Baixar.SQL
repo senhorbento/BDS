@@ -6,9 +6,8 @@ DELIMITER /
         DECLARE vencimento VARCHAR(15) DEFAULT 0;
         DECLARE valor INT DEFAULT 0;
 
-        SELECT data_vencimento
-        INTO vencimento, total_conta
-        INTO valor
+        SELECT data_vencimento, total_conta
+        INTO vencimento, valor
         FROM ContaReceber
         WHERE id = baixar;
 
@@ -37,9 +36,8 @@ DELIMITER /
         DECLARE vencimento VARCHAR(15) DEFAULT 0;
         DECLARE valor INT DEFAULT 0;
 
-        SELECT data_vencimento
-        INTO vencimento, total_conta
-        INTO valor
+        SELECT data_vencimento, total_conta
+        INTO vencimento, valor
         FROM ContaPagar
         WHERE id = baixar;
 
