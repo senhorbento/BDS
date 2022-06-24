@@ -6,16 +6,11 @@ DELIMITER /
         DECLARE vencimento VARCHAR(15) DEFAULT 0;
         DECLARE valor INT DEFAULT 0;
 
-        SELECT data_vencimento
-        INTO vencimento
+        SELECT data_vencimento, total_conta
+        INTO vencimento, valor
         FROM ContaReceber
         WHERE id = baixar;
 
-        SELECT total_conta
-        INTO valor
-        FROM ContaReceber
-        WHERE id = baixar;
-        
         IF (current_date() > vencimento) THEN
             UPDATE ContaReceber 
             SET estado_conta = "PAGA-ATRASADO",
@@ -41,13 +36,8 @@ DELIMITER /
         DECLARE vencimento VARCHAR(15) DEFAULT 0;
         DECLARE valor INT DEFAULT 0;
 
-        SELECT data_vencimento
-        INTO vencimento
-        FROM ContaPagar
-        WHERE id = baixar;
-
-        SELECT total_conta
-        INTO valor
+        SELECT data_vencimento, total_conta
+        INTO vencimento, valor
         FROM ContaPagar
         WHERE id = baixar;
 

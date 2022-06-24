@@ -51,26 +51,22 @@ CREATE TABLE ContaReceber (
     id                      INT PRIMARY KEY AUTO_INCREMENT, 
     id_cliente              INT NOT NULL, 
     total_conta             INT NOT NULL, 
-    id_forma_pagamento      INT NOT NULL,
     data_lancamento         VARCHAR(15) NOT NULL, 
     data_vencimento         VARCHAR(15) NOT NULL,
     estado_conta            VARCHAR(20) NOT NULL,
     data_recebimento        VARCHAR(15), 
-    FOREIGN KEY (id_cliente) REFERENCES Cliente(id),
-    FOREIGN KEY (id_forma_pagamento) REFERENCES FormaPagamento(id)
+    FOREIGN KEY (id_cliente) REFERENCES Cliente(id)
 );
 
 CREATE TABLE ContaPagar (
     id                      INT PRIMARY KEY AUTO_INCREMENT, 
     id_fornecedor           INT NOT NULL, 
     total_conta             INT NOT NULL, 
-    id_forma_pagamento      INT NOT NULL,
     data_lancamento         VARCHAR(15) NOT NULL, 
     data_vencimento         VARCHAR(15) NOT NULL,
     estado_conta            VARCHAR(20) NOT NULL,
     data_pagamento          VARCHAR(15), 
-    FOREIGN KEY (id_fornecedor) REFERENCES Fornecedor(id),
-    FOREIGN KEY (id_forma_pagamento) REFERENCES FormaPagamento(id)
+    FOREIGN KEY (id_fornecedor) REFERENCES Fornecedor(id)
 );
 
 CREATE TABLE Produto (
@@ -94,6 +90,7 @@ CREATE TABLE Compra (
 CREATE TABLE FormaPagamentoVenda (
     id                      INT NOT NULL,
     id_venda                INT NOT NULL,
+    id_forma_pagamento      INT NOT NULL,
     valor                   INT NOT NULL,
     PRIMARY KEY (id_forma_pagamento, id_venda),
     FOREIGN KEY (id_forma_pagamento) REFERENCES FormaPagamento(id),
@@ -103,6 +100,7 @@ CREATE TABLE FormaPagamentoVenda (
 CREATE TABLE FormaPagamentoCompra (
     id                      INT NOT NULL,
     id_compra               INT NOT NULL,
+	id_forma_pagamento      INT NOT NULL,
     valor                   INT NOT NULL,
     PRIMARY KEY (id_forma_pagamento, id_compra),
     FOREIGN KEY (id_forma_pagamento) REFERENCES FormaPagamento(id),
