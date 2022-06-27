@@ -34,7 +34,43 @@ SELECT c.id, cr.id, cr.total_conta, cr.data_lancamento, cr.data_vencimento,
 cr.estado_conta, cr.data_recebimento
 FROM ContaReceber as cr JOIN Cliente as c ON cr.id_cliente = c.id;
 
+CREATE VIEW viewContaReceberAberta as
+SELECT c.id, cr.id, cr.total_conta, cr.data_lancamento, cr.data_vencimento, 
+cr.estado_conta, cr.data_recebimento
+FROM ContaReceber as cr JOIN Cliente as c ON cr.id_cliente = c.id
+WHERE cr.estado_conta = "ABERTA";
+
+CREATE VIEW viewContaReceberPaga as
+SELECT c.id, cr.id, cr.total_conta, cr.data_lancamento, cr.data_vencimento, 
+cr.estado_conta, cr.data_recebimento
+FROM ContaReceber as cr JOIN Cliente as c ON cr.id_cliente = c.id
+WHERE cr.estado_conta = "PAGA";
+
+CREATE VIEW viewContaReceberAtrasada as
+SELECT c.id, cr.id, cr.total_conta, cr.data_lancamento, cr.data_vencimento, 
+cr.estado_conta, cr.data_recebimento
+FROM ContaReceber as cr JOIN Cliente as c ON cr.id_cliente = c.id
+WHERE cr.estado_conta = "PAGA-ATRASADO";
+
 CREATE VIEW viewContaPagar as
 SELECT f.id, cp.id, cp.total_conta, cp.data_lancamento, cp.data_vencimento, 
 cp.estado_conta, cp.data_pagamento
 FROM ContaPagar as cp JOIN Fornecedor as f ON cp.id_fornecedor = f.id;
+
+CREATE VIEW viewContaPagarAberta as
+SELECT f.id, cp.id, cp.total_conta, cp.data_lancamento, cp.data_vencimento, 
+cp.estado_conta, cp.data_pagamento
+FROM ContaPagar as cp JOIN Fornecedor as f ON cp.id_fornecedor = f.id
+WHERE cp.estado_conta = "ABERTA";
+
+CREATE VIEW viewContaPagarPaga as
+SELECT f.id, cp.id, cp.total_conta, cp.data_lancamento, cp.data_vencimento, 
+cp.estado_conta, cp.data_pagamento
+FROM ContaPagar as cp JOIN Fornecedor as f ON cp.id_fornecedor = f.id
+WHERE cp.estado_conta = "PAGA";
+
+CREATE VIEW viewContaPagarAtrasada as
+SELECT f.id, cp.id, cp.total_conta, cp.data_lancamento, cp.data_vencimento, 
+cp.estado_conta, cp.data_pagamento
+FROM ContaPagar as cp JOIN Fornecedor as f ON cp.id_fornecedor = f.id
+WHERE cp.estado_conta = "PAGA-ATRASADO";
