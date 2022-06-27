@@ -1,13 +1,25 @@
 USE pdv;
 
-CREATE VIEW viewProdutos as
-SELECT id, nome, preco FROM Produto;
-
-CREATE VIEW viewClientes as
+CREATE VIEW viewTodosClientes as
 SELECT id, nome, cpf_cnpj FROM Cliente;
 
-CREATE VIEW viewFornecedor as
+CREATE VIEW viewClientesExcluidos as
+SELECT id, nome, cpf_cnpj FROM Cliente WHERE estado_cliente = "EXCLUIDO";
+
+CREATE VIEW viewClientesAtivos as
+SELECT id, nome, cpf_cnpj FROM Cliente WHERE estado_cliente = "ATIVO";
+
+CREATE VIEW viewTodosFornecedores as
 SELECT id, nome, cpf_cnpj FROM Fornecedor;
+
+CREATE VIEW viewFornecedoresExcluidos as
+SELECT id, nome, cpf_cnpj FROM Fornecedor WHERE estado_fornecedor = "EXCLUIDO";
+
+CREATE VIEW viewFornecedoresAtivos as
+SELECT id, nome, cpf_cnpj FROM Cliente WHERE estado_fornecedor = "ATIVO";
+
+CREATE VIEW viewProdutos as
+SELECT id, nome, preco FROM Produto;
 
 CREATE VIEW viewVendas as
 SELECT c.nome, v.id, v.total_venda, v.data_venda, v.estado_venda
