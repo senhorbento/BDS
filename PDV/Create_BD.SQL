@@ -7,7 +7,8 @@ CREATE TABLE Funcionario (
     email           VARCHAR(100) NOT NULL,
     nome            VARCHAR(100) NOT NULL, 
     cpf_cnpj        VARCHAR(14) NOT NULL,
-    telefone        VARCHAR(20) NOT NULL
+    telefone        VARCHAR(20) NOT NULL,
+    funcao          VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE Cliente (
