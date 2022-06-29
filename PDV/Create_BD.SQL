@@ -3,7 +3,8 @@ USE pdv;
 
 CREATE TABLE Funcionario (
     id              INT PRIMARY KEY AUTO_INCREMENT, 
-    senha           VARCHAR(100) NOT NULL,
+    usuario         VARCHAR(20) NOT NULL,
+    senha           VARCHAR(20) NOT NULL,
     email           VARCHAR(100) NOT NULL,
     nome            VARCHAR(100) NOT NULL, 
     cpf_cnpj        VARCHAR(14) NOT NULL,
