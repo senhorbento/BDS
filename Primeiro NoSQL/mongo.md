@@ -3,7 +3,7 @@
 use primeiroBanco;
 ```
 
-# Inserir/criar tabela de dados
+# Inserir/criar "tabela" de dados
 ```
 //INSERT uma linha
 db.usuario.insertOne({"user": "admin", "password": "admin"});
@@ -29,7 +29,7 @@ db.pessoa.insertMany([
 show collections;
 ```
 
-# Selecionar dados no banco
+# Selecionar dados na collection
 ```
 //SELECT all
 db.primeiroBanco.find(); 
@@ -46,6 +46,9 @@ db.primeiroBanco.findOne({"user": "admin1"});
 
 //SELECT todos com o user = admin1
 db.primeiroBanco.find({"user": "admin1"}); 
+
+//SELECT todos com o nome = Joao
+db.pessoa.find({"nome": "Joao"}); 
 ```
 # Atualizar dados no banco
 ```
