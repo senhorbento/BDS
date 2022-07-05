@@ -4,7 +4,7 @@ use primeiroBanco;
 ```
 
 # Inserir/criar collection de dados
-```
+```C++
 //INSERT uma linha
 db.usuario.insertOne({"user": "admin", "password": "admin"});
 
@@ -30,7 +30,7 @@ show collections;
 ```
 
 # Selecionar dados na collection
-```
+```C++
 //SELECT all
 db.primeiroBanco.find(); 
 
@@ -52,7 +52,7 @@ db.pessoa.find({"nome": "Joao"});
 ```
 
 # Atualizar dados na collection
-```
+```C++
 //Sintaxe
 db.primeiroBanco.updateOne({"WHERE"}, {$set:"SET"}); 
 db.primeiroBanco.updateMany({"WHERE"}, {$set:"SET"});
@@ -65,7 +65,7 @@ db.primeiroBanco.updateMany({"user" : "admin1"}, {$set: {"password": "nova-senha
 ```
 
 # Atualizar os atributos da collection
-```
+```C++
 //Sintaxe
 db.primeiroBanco.replaceOne({"WHERE"}, {"Nova estrutura"});
 
@@ -74,8 +74,7 @@ db.primeiroBanco.replaceOne({"user" : "admin1"}, {"password": "nova-senha"});
 ```
 
 # Deletar dados na collection
-
-```
+```C++
 //Sintaxe
 db.primeiroBanco.deleteOne({"WHERE"});
 db.primeiroBanco.deleteMany({"WHERE"});
