@@ -144,7 +144,6 @@ CREATE TABLE ItemCompra (
     FOREIGN KEY (id_produto) REFERENCES Produto(id)
 );
 
-
 CREATE TABLE Caixa (
     id                      INT PRIMARY KEY AUTO_INCREMENT,
     saldo                   INT NOT NULL,
