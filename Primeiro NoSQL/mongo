@@ -1,9 +1,0 @@
-use primeiroBanco;
-db.primeiroBanco.insertOne({"user": "admin", "password": "admin"});
-db.primeiroBanco.insertMany([
-  {"user": "admin1", "password": "admin1"}, 
-  {"user": "admin2", "password": "admin2"}
-]);
-db.primeiroBanco.find(); //SELECT all
-db.primeiroBanco.findOne(); //SELECT primeiro item inserido no banco
-db.primeiroBanco.find().pretty(); //SELECT all com resultado semelhante a um Json
