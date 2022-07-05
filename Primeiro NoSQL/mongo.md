@@ -3,7 +3,7 @@
 use primeiroBanco;
 ```
 
-# Inserir/criar "tabela" de dados
+# Inserir/criar collection de dados
 ```
 //INSERT uma linha
 db.usuario.insertOne({"user": "admin", "password": "admin"});
@@ -24,7 +24,7 @@ db.pessoa.insertMany([
 
 ```
 
-# Mostra todas as "tabelas"
+# Mostra todas as collections
 ```
 show collections;
 ```
@@ -50,13 +50,40 @@ db.primeiroBanco.find({"user": "admin1"});
 //SELECT todos com o nome = Joao
 db.pessoa.find({"nome": "Joao"}); 
 ```
-# Atualizar dados no banco
+
+# Atualizar dados na collection
 ```
 //Sintaxe
 db.primeiroBanco.updateOne({"WHERE"}, {$set:"SET"}); 
+db.primeiroBanco.updateMany({"WHERE"}, {$set:"SET"});
 
 //UPDATE somente do primeiro encontrado
 db.primeiroBanco.updateOne({"user" : "admin1"}, {$set: {"password": "nova-senha"}}); 
-//UPDATE todos os encontrados
+
+//UPDATE todos que atendem ao "WHERE"
 db.primeiroBanco.updateMany({"user" : "admin1"}, {$set: {"password": "nova-senha"}}); 
+```
+
+# Atualizar os atributos da collection
+```
+//Sintaxe
+db.primeiroBanco.replaceOne({"WHERE"}, {"Nova estrutura"});
+
+Exemplo:
+db.primeiroBanco.replaceOne({"user" : "admin1"}, {"password": "nova-senha"}); 
+```
+
+# Deletar dados na collection
+
+```
+//Sintaxe
+db.primeiroBanco.deleteOne({"WHERE"});
+db.primeiroBanco.deleteMany({"WHERE"});
+
+Exemplo:
+//DELETE o primeiro com o user = admin1
+db.primeiroBanco.deleteOne({"user" : "admin1"}); 
+
+//DELETE todos com o user = admin1
+db.primeiroBanco.deleteMany({"user" : "admin1"}); 
 ```
