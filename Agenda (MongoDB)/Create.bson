@@ -1,0 +1,8 @@
+use Agenda;
+db.contato.insertMany([
+  {"nome": "Joao", "telefone": "1974043066", "email":"joao@email.com"},
+  {"nome": "Maria", "telefone": "8525224904", "email":"maria@email.com"},
+  {"nome": "Daniel", "telefone": "2185829925", "email":"daniel@email.com.br"},
+  {"nome": "Olavo", "telefone": "8162884940", "email":"olavo@email.com"},
+  {"nome": "Lucas", "telefone": "28623030", "email":"lucas@email.com"}
+]);
