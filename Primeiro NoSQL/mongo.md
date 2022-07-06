@@ -58,7 +58,7 @@ db.pessoa.insertMany([
 show dbs;
 ```
 ## Exemplo
-```C#
+```C++
 //Exemplo resultado:
 admin    0.000GB
 config   0.000GB
@@ -149,7 +149,8 @@ db.usuario.insertMany([
 # Atualizar todos os dados de um registro/documento
 ## Sintaxe
 ```C#
-//Atualiza TODOS os dados para o(s) que foi(foram) passado(s) no segundo parâmetro e modifica a estrutura, semelhante ao ALTER TABLE
+/*Atualiza TODOS os dados para o(s) que foi(foram) passado(s) no segundo parâmetro e 
+modifica a estrutura, semelhante ao ALTER TABLE*/
 
 //Somente no primeiro correspondente ao primeiro parâmetro
 db.NomeDaCollection.replaceOne({"WHERE"}, {"Nova estrutura"});
